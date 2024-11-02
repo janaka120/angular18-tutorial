@@ -1,4 +1,6 @@
 <div>
     Home
     <app-greeting [message]="homeMessage()"></app-greeting>
+    <input (keyup)="onKeyPress($event)" placeholder="Type Something here..."/>
+    <app-counter></app-counter>
 </div>
