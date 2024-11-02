@@ -14,6 +14,5 @@ export class HomeComponent {
 
   onKeyPress(event: KeyboardEvent) {
     console.log(`User pressed the ${event.key} key`);
-
   }
 }
