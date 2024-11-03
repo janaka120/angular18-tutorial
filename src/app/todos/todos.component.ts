@@ -3,11 +3,12 @@ import { TodosService } from '../services/todos.service';
 import { Todo } from '../model/todo.type';
 import { NgFor, NgTemplateOutlet } from '@angular/common';
 import { catchError } from 'rxjs';
+import { TodoItemComponent } from '../components/todo-item/todo-item.component';
 
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [NgFor, NgTemplateOutlet],
+  imports: [NgFor, NgTemplateOutlet, TodoItemComponent],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.scss'
 })
@@ -24,6 +25,20 @@ export class TodosComponent implements OnInit {
     )
     .subscribe((todos) => {
       this.todoItems.set(todos);
+    })
+  }
+
+  todoToggledHandler(todo: Todo) {
+    this.todoItems.update((item) => {
+      return item.map(i => {
+        if(i.id === todo.id) {
+          return {
+            ...i,
+            completed: !todo.completed
+          }
+        }
+        return i;
+      })
     })
   }
 }
