@@ -1,6 +1,9 @@
 <h3>My Todos List</h3>
 <ul>
     @for (item of todoItems(); track item.id) {
-        <li>{{item.title}}</li>
+        <li>
+            <input id="todo-{{ item.id }}" type="checkbox" [value]="item.completed"/>
+            <label for="todo-{{item.id}}">{{item.title}}</label>
+        </li>
     }
 </ul>
