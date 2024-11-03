@@ -2,19 +2,22 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { TodosService } from '../services/todos.service';
 import { Todo } from '../model/todo.type';
 import { NgFor, NgTemplateOutlet } from '@angular/common';
-import { catchError } from 'rxjs';
+import { catchError, single } from 'rxjs';
 import { TodoItemComponent } from '../components/todo-item/todo-item.component';
+import { FormsModule } from '@angular/forms';
+import { FilterTodosPipe } from '../pipes/filter-todos.pipe';
 
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [NgFor, NgTemplateOutlet, TodoItemComponent],
+  imports: [NgFor, NgTemplateOutlet, TodoItemComponent, FormsModule, FilterTodosPipe],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.scss'
 })
 export class TodosComponent implements OnInit {
   todoService = inject(TodosService);
   todoItems = signal<Array<Todo>>([]);
+  searchTerm = signal<string>('');
 
   ngOnInit(): void {
     this.todoService.getTodosFromApi().pipe(
@@ -41,4 +44,9 @@ export class TodosComponent implements OnInit {
       })
     })
   }
+
+  // searchInputHandler(e: HTMLInputElement) {
+  //   this.searchTerm.set(e.value);
+  //   console.log("this.searchTerm >>>", e.value);
+  // }
 }
